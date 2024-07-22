@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -84,10 +84,13 @@ export default function AllProductsPage() {
         </select>
       </label>
       {filteredProducts.map((product) => (
-        <div key={product.id}>
-          <p>{product.title}</p>
-          <p>{product.price}</p>
-        </div>
+        <Link to={`/products/${product.id}`} key={product.id}>
+          <div>
+            <p>ID: {product.id}</p>
+            <p>TITLE: {product.title}</p>
+            <p>PRICE: {product.price}</p>
+          </div>
+        </Link>
       ))}
     </div>
   );
