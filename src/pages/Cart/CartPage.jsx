@@ -1,40 +1,13 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../redux/modalSlice";
+import { removeItem } from "../../redux/cartSlice";
 
 import Button from "../../components/Button/Button";
 
-const cartItems = [
-  {
-    id: 1,
-    title: "Product 1",
-    image: "https://via.placeholder.com/150",
-    price: 100,
-    discountPrice: 120,
-    quantity: 2,
-  },
-  {
-    id: 2,
-    title: "Product 2",
-    image: "https://via.placeholder.com/150",
-    price: 200,
-    discountPrice: 220,
-    quantity: 5,
-  },
-  {
-    id: 3,
-    title: "Product 3",
-    image: "https://via.placeholder.com/150",
-    price: 150,
-    discountPrice: null,
-    quantity: 3,
-  },
-];
-
-const isInCart = true;
-
 export default function CartPage() {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
 
   const totalQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,
@@ -80,17 +53,22 @@ export default function CartPage() {
                 Price: {item.price}, Quantity: {item.quantity}, Total:{" "}
                 {item.price * item.quantity}
               </p>
-              {item.discountPrice && (
-                <p>Dicounted Price: {item.discountPrice * item.quantity}</p>
+              {item.discont_price && (
+                <p>Dicounted Price: {item.discont_price * item.quantity}</p>
               )}
-              <button>Remove</button>
+              <button
+                onClick={() => {
+                  dispatch(removeItem({ id: item.id }));
+                }}
+              >
+                Remove
+              </button>
             </li>
           ))}
         </ul>
       )}
       <p>Total Quantity: {totalQuantity}</p>
       <p>Total Price: {totalPrice}</p>
-      <Button isActive={isInCart}>{isInCart ? "Added" : "Add to cart"}</Button>
       <Button onClick={handlePlaceOrder}>Place order</Button>
     </div>
   );

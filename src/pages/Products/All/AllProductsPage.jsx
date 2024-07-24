@@ -1,10 +1,15 @@
 import { useSearchParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import Button from "../../../components/Button/Button";
+import { addToCart } from "../../../redux/cartSlice";
 
 export default function AllProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
@@ -83,15 +88,45 @@ export default function AllProductsPage() {
           <option value="priceLowToHigh">price: low-high</option>
         </select>
       </label>
-      {filteredProducts.map((product) => (
-        <Link to={`/products/${product.id}`} key={product.id}>
-          <div>
-            <p>ID: {product.id}</p>
-            <p>TITLE: {product.title}</p>
-            <p>PRICE: {product.price}</p>
-          </div>
-        </Link>
-      ))}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
+        }}
+      >
+        {filteredProducts.map((product) => {
+          const realPrice = product.discont_price || product.price;
+          const oldPrice = product.discont_price ? product.price : null;
+          return (
+            <Link
+              to={`/products/${product.id}`}
+              key={product.id}
+              style={{
+                maxWidth: "200px",
+                textDecoration: "none",
+                border: "1px solid black",
+              }}
+            >
+              <div>
+                <p>ID: {product.id}</p>
+                <p>TITLE: {product.title}</p>
+                <p>PRICE: {realPrice}</p>
+                {oldPrice && <p>OLD PRICE: {oldPrice}</p>}
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dispatch(addToCart(product));
+                  }}
+                >
+                  Add to cart
+                </Button>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }
