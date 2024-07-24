@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../redux/modalSlice";
+
+import Button from "../../components/Button/Button";
 
 const cartItems = [
   {
@@ -27,7 +31,11 @@ const cartItems = [
   },
 ];
 
+const isInCart = true;
+
 export default function CartPage() {
+  const dispatch = useDispatch();
+
   const totalQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
@@ -37,6 +45,21 @@ export default function CartPage() {
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  function handlePlaceOrder() {
+    dispatch(
+      openModal({
+        title: "Order Placed",
+        content: (
+          <>
+            <p>Your order has been placed successfully.</p>
+            <p>Total Quantity: {totalQuantity}</p>
+            <p>Total Price: {totalPrice}</p>
+          </>
+        ),
+      })
+    );
+  }
 
   return (
     <div>
@@ -67,6 +90,8 @@ export default function CartPage() {
       )}
       <p>Total Quantity: {totalQuantity}</p>
       <p>Total Price: {totalPrice}</p>
+      <Button isActive={isInCart}>{isInCart ? "Added" : "Add to cart"}</Button>
+      <Button onClick={handlePlaceOrder}>Place order</Button>
     </div>
   );
 }
