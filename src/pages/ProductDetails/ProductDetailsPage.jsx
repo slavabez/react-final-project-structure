@@ -1,8 +1,6 @@
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Breadcrumbs from "../../components/Breadcrumb/Breadcrumbs";
-import { useEffect, useState } from "react";
-import { API_URL } from "../../api";
 
 function getCategoryName(categories, categoryId) {
   const category = categories.find((category) => category.id === categoryId);
@@ -11,33 +9,20 @@ function getCategoryName(categories, categoryId) {
 
 export default function ProductDetailsPage() {
   const { productId } = useParams();
-  const [product, setProduct] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const products = useSelector((state) => state.data.products);
+  const categories = useSelector((state) => state.data.categories);
 
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/products/${productId}`)
-      .then((response) => {
-        if (response.data.length > 0) {
-          setProduct(response.data[0]);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const product = products.find(
+    (product) => product.id === parseInt(productId)
+  );
 
-    axios
-      .get(`${API_URL}/categories/all`)
-      .then((response) => {
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [productId]);
-
-  if (!product || categories.length === 0) {
-    return <p>Loading...</p>;
+  if (!product) {
+    return (
+      <div>
+        <h2>Error</h2>
+        <p>Product not found</p>
+      </div>
+    );
   }
 
   return (

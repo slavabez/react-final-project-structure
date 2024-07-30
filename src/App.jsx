@@ -15,6 +15,7 @@ import CartPage from "./pages/Cart/CartPage";
 import NotFoundPage from "./pages/NotFound/NotFoundPage";
 
 import store from "./redux/store";
+import DataLoader from "./components/DataLoader/DataLoader";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         </Routes>
         <Footer />
         <ConnectedModal />
+        <DataLoader />
       </BrowserRouter>
     </ReduxProvider>
   );
