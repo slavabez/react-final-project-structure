@@ -1,4 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+// Пример того, как можно использовать createAsyncThunk для открытия и закрытия модального окна
+export const openAndCloseModal = createAsyncThunk(
+  "modal/openAndCloseModal",
+  async (data, thunkAPI) => {
+    // data - это объект, в котором наше состояние в нашем срезе (isOpen, title, content)
+    const { title, content } = data;
+    // thunkAPI - объект с полным доступом к Redux
+    thunkAPI.dispatch(openModal({ title, content }));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    thunkAPI.dispatch(closeModal());
+  }
+);
 
 export const modalSlice = createSlice({
   name: "modal",
