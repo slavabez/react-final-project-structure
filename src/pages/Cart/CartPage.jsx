@@ -4,6 +4,7 @@ import { openModal } from "../../redux/modalSlice";
 import { removeItem } from "../../redux/cartSlice";
 
 import Button from "../../components/Button/Button";
+import CartItem from "../../components/CartItem/CartItem";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -45,25 +46,7 @@ export default function CartPage() {
       ) : (
         <ul>
           {cartItems.map((item) => (
-            <li key={item.id}>
-              <p>
-                ID: {item.id}, title: {item.title}
-              </p>
-              <p>
-                Price: {item.price}, Quantity: {item.quantity}, Total:{" "}
-                {item.price * item.quantity}
-              </p>
-              {item.discont_price && (
-                <p>Dicounted Price: {item.discont_price * item.quantity}</p>
-              )}
-              <button
-                onClick={() => {
-                  dispatch(removeItem({ id: item.id }));
-                }}
-              >
-                Remove
-              </button>
-            </li>
+            <CartItem key={item.id} item={item} />
           ))}
         </ul>
       )}
