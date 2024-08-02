@@ -17,6 +17,8 @@ import NotFoundPage from "./pages/NotFound/NotFoundPage";
 import store from "./redux/store";
 import DataLoader from "./components/DataLoader/DataLoader";
 
+import "./index.css";
+
 function App() {
   return (
     <ReduxProvider store={store}>
