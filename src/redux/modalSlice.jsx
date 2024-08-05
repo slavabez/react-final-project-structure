@@ -12,6 +12,13 @@ export const openAndCloseModal = createAsyncThunk(
     thunkAPI.dispatch(closeModal());
   }
 );
+/**
+ * 1. asdasd
+ * 2> asdasda
+ * asdasd
+ * 
+ * 
+ */
 
 export const modalSlice = createSlice({
   name: "modal",
