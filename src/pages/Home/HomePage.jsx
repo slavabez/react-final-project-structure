@@ -23,7 +23,7 @@ export default function HomePage() {
       >
         Show modal
       </button>
-      <ProductContainer products={discontProducts} />
+      <ProductContainer products={discontProducts.slice(0, 4)} />
     </div>
   );
 }

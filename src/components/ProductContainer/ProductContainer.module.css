@@ -3,17 +3,7 @@
     grid-template-columns: 1fr;
     gap: 32px;
 
-    @media (min-width: 450px) {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    @media (min-width: 1024px) {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    @media (min-width: 1200px) {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
+    
 }
 
 .ProductCard {
@@ -29,3 +19,21 @@
 }
 
 .ProductBottom {}
+
+@media (min-width: 450px) {
+    .ProductContainer{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ProductContainer{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (min-width: 1200px) {
+    .ProductContainer{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}

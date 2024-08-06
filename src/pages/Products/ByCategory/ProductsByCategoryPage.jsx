@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { API_URL } from "../../../api";
 
 export default function ProductsByCategoryPage() {
   const { categoryId } = useParams();
@@ -13,7 +14,7 @@ export default function ProductsByCategoryPage() {
     // Fetch products by category ID
     setIsLoading(true);
     axios
-      .get(`http://localhost:3333/categories/${categoryId}`)
+      .get(`${API_URL}/categories/${categoryId}`)
       .then((response) => {
         if (response.status === 200) {
           setProducts(response.data.data);

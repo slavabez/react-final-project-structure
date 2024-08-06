@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
-import LoadingBar from "react-top-loading-bar";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+
+import styles from "./Header.module.css";
 
 function calculateNumberOfProductsInCart(cart) {
   let totalQuantity = 0;
@@ -12,35 +13,21 @@ function calculateNumberOfProductsInCart(cart) {
 }
 
 export default function Header() {
-  const loadingRef = useRef(null);
-  const isLoading = useSelector((state) => state.data.isLoading);
+  const burgerRef = useRef(null);
   const cart = useSelector((state) => state.cart.items);
+  const location = useLocation();
 
   const totalQuantity = calculateNumberOfProductsInCart(cart);
 
-  if (loadingRef.current) {
-    if (isLoading) {
-      loadingRef.current.continuousStart();
-    } else {
-      loadingRef.current.complete();
-    }
-  }
+  useEffect(() => {
+    burgerRef.current.checked = false;
+  }, [location]);
 
   return (
-    <header
-      style={{
-        display: "flex",
-        width: "100%",
-      }}
-    >
-      <LoadingBar color="#0D50FF" ref={loadingRef} />
+    <header className={styles.Header}>
       <Link to="/">Logo</Link>
-      <nav style={{ flexGrow: 1, display: "flex" }}>
-        <ul
-          style={{
-            display: "flex",
-          }}
-        >
+      <nav>
+        <ul className={styles.HeaderNav}>
           <li>
             <Link to="/">Main Page</Link>
           </li>
@@ -55,7 +42,36 @@ export default function Header() {
           </li>
         </ul>
       </nav>
-      <Link to="/cart">Cart ({totalQuantity})</Link>
+      <div className={styles.RightSection}>
+        <Link to="/cart">Cart ({totalQuantity})</Link>
+        <input
+          ref={burgerRef}
+          className={styles.BurgerCheckbox}
+          type="checkbox"
+          id="mobile-menu"
+        />
+        <label htmlFor="mobile-menu" className={styles.BurgerIcon}>
+          <svg viewBox="0 0 100 80" width="40" height="40">
+            <rect width="100" height="20" rx="8"></rect>
+            <rect y="30" width="100" height="20" rx="8"></rect>
+            <rect y="60" width="100" height="20" rx="8"></rect>
+          </svg>
+        </label>
+        <ul className={styles.MobileMenu}>
+          <li>
+            <Link to="/">Main Page</Link>
+          </li>
+          <li>
+            <Link to="/categories">Categories</Link>
+          </li>
+          <li>
+            <Link to="/products">All Products</Link>
+          </li>
+          <li>
+            <Link to="/discounted-products">All Sales</Link>
+          </li>
+        </ul>
+      </div>
     </header>
   );
 }

@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 
 import Button from "../../../components/Button/Button";
 import { addToCart } from "../../../redux/cartSlice";
+import { API_URL } from "../../../api";
+import ProductContainer from "../../../components/ProductContainer/ProductContainer";
 
 export default function AllProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,7 +23,7 @@ export default function AllProductsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3333/products/all");
+        const response = await axios.get(`${API_URL}/products/all`);
         setProducts(response.data);
       } catch (error) {
         console.error(error);
@@ -88,45 +90,7 @@ export default function AllProductsPage() {
           <option value="priceLowToHigh">price: low-high</option>
         </select>
       </label>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "10px",
-        }}
-      >
-        {filteredProducts.map((product) => {
-          const realPrice = product.discont_price || product.price;
-          const oldPrice = product.discont_price ? product.price : null;
-          return (
-            <Link
-              to={`/products/${product.id}`}
-              key={product.id}
-              style={{
-                maxWidth: "200px",
-                textDecoration: "none",
-                border: "1px solid black",
-              }}
-            >
-              <div>
-                <p>ID: {product.id}</p>
-                <p>TITLE: {product.title}</p>
-                <p>PRICE: {realPrice}</p>
-                {oldPrice && <p>OLD PRICE: {oldPrice}</p>}
-                <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dispatch(addToCart(product));
-                  }}
-                >
-                  Add to cart
-                </Button>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+      <ProductContainer products={filteredProducts} />
     </div>
   );
 }
