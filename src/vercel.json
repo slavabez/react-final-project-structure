@@ -1,0 +1,10 @@
+{
+    "routes": [
+      { "src": "/", "dest": "/" },
+      { "src": "/categories", "dest": "/" },
+      { "src": "/products", "dest": "/" },
+      { "src": "/discounted-products", "dest": "/" },
+      { "src": "/products/*", "dest": "/" },
+      { "src": "/cart", "dest": "/" }
+    ]
+  }
