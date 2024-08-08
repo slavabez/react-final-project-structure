@@ -17,6 +17,7 @@ export default function HomePage() {
       <Title className="Hello" tag="h2" style={{ color: "red" }}>
         Home Page
       </Title>
+
       <TitleWithLine
         title="Discount Products"
         linkText="See all"
