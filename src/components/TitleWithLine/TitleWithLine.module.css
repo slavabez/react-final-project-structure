@@ -1,0 +1,26 @@
+.Container {
+     display: flex;
+    justify-content: space-between;
+    gap:  32px;
+    align-items: center;
+}
+
+.Title {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 70.4px;
+}
+
+.RightSideContainer {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+   
+.Line {
+    border-top: 1px solid #DDDDDD;
+    flex-grow: 1;
+}
+

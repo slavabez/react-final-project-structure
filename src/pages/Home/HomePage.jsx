@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openAndCloseModal } from "../../redux/modalSlice";
 import Title from "../../components/Title/Title";
 import ProductContainer from "../../components/ProductContainer/ProductContainer";
+import TitleWithLine from "../../components/TitleWithLine/TitleWithLine";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -16,6 +17,12 @@ export default function HomePage() {
       <Title className="Hello" tag="h2" style={{ color: "red" }}>
         Home Page
       </Title>
+      <TitleWithLine
+        title="Discount Products"
+        linkText="See all"
+        linkTo="/products"
+      />
+
       <button
         onClick={() => {
           dispatch(openAndCloseModal({ title: "Title", content: "Content" }));
